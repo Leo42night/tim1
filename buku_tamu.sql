@@ -20,33 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `buku_tamu`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `guests`
---
-
-CREATE TABLE `guests` (
-  `id` int NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `visit_date` date NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `guests`
---
-
-INSERT INTO `guests` (`id`, `name`, `visit_date`, `email`, `created_at`) VALUES
-(1, 'mooney', '2025-11-30', 'h1101241027@student.untan.ac.id', '2025-11-23 12:32:18'),
-(2, 'cacah', '2025-11-30', 'h1101241003@student.untan.ac.id', '2025-11-23 12:33:32'),
-(3, 'syakh', '2025-11-30', 'h1101241025@student.untan.ac.id', '2025-11-23 12:33:54'),
-(4, 'kaniah', '2025-11-30', 'h1101241055@student.untan.ac.id', '2025-11-23 12:34:07'),
-(5, 'billah', '2025-11-30', 'billa@gmail.com', '2025-11-23 12:34:34'),
-(6, 'haechan', '2025-11-30', 'leehaechan@gmail.com', '2025-11-23 12:55:09');
-
 -- --------------------------------------------------------
 
 --
@@ -97,10 +70,6 @@ INSERT INTO `tamu` (`id_tamu`, `id_kegiatan`, `nama`, `tanggal_kunjungan`, `emai
 --
 
 --
--- Indexes for table `guests`
---
-ALTER TABLE `guests`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `kegiatan`
@@ -120,11 +89,7 @@ ALTER TABLE `tamu`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `guests`
---
-ALTER TABLE `guests`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+-
 
 --
 -- AUTO_INCREMENT for table `kegiatan`
