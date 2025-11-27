@@ -28,7 +28,7 @@ class KegiatanController extends Controller {
     public function simpan() {
         $data = [
             'nama_kegiatan' => $_POST['nama_kegiatan'] ?? '', 
-            'tanggal'       => $_POST['tanggal_kegiatan'] ?? '',       
+            'tanggal_kegiatan'       => $_POST['tanggal_kegiatan'] ?? '',       
             'lokasi'        => $_POST['lokasi'] ?? ''
         ];
 
