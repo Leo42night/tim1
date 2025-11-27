@@ -15,7 +15,6 @@ class AdminController extends Controller {
     }
 
     public function index() {
-        // Cek apakah user sudah login?
         if(isset($_SESSION['admin'])) {
             $this->dashboard(); 
         } else {
@@ -31,20 +30,32 @@ class AdminController extends Controller {
         $this->view('Admin/Login', ['title' => 'Login Admin']);
     }
 
+    // --- BAGIAN INI YANG DIUBAH UNTUK BYPASS DATABASE ---
     public function doLogin() {
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        $admin = $this->adminModel->login($username, $password);
-        
-        if($admin) {
-            Auth::login($admin);
-            // PERBAIKAN: Gunakan path relatif agar fleksibel
-            // Tidak perlu http://localhost/SIBUTAD/Public/...
-            // Cukup panggil index.php karena file ini dijalankan dari folder Public juga
+        // TENTUKAN USERNAME & PASSWORD YANG KAMU MAU DI SINI
+        $user_rahasia = 'admin';
+        $pass_rahasia = 'admin123'; // Password biasa (bukan hash)
+
+        // Cek apakah inputan sama dengan yang kita tentukan?
+        if($username === $user_rahasia && $password === $pass_rahasia) {
+            
+            // Karena tidak ambil dari database, kita buat data admin 'palsu' untuk sesi
+            $adminData = [
+                'id' => 999, // ID asal saja
+                'username' => $user_rahasia,
+                'nama' => 'Administrator'
+            ];
+
+            // Login Sukses
+            Auth::login($adminData);
             header("Location: index.php?url=admin/dashboard");
             exit;
+
         } else {
+            // Login Gagal
             $this->view('Admin/Login', [
                 'title' => 'Login Admin', 
                 'error' => 'Username atau password salah'
@@ -54,7 +65,6 @@ class AdminController extends Controller {
 
     public function logout() {
         Auth::logout();
-        // PERBAIKAN: Gunakan path relatif
         header("Location: index.php?url=admin/login");
         exit;
     }
