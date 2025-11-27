@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Admin;
 use App\Core\Auth;
+use App\Models\ViewData; 
 
 class AdminController extends Controller {
 
@@ -13,13 +14,21 @@ class AdminController extends Controller {
         $this->adminModel = new Admin();
     }
 
-    public function login() {
-        // jika sudah login redirect ke dashboard
+    public function index() {
+        // Cek apakah user sudah login?
         if(isset($_SESSION['admin'])) {
-            header("Location: /Dashboard.php");
+            $this->dashboard(); 
+        } else {
+            $this->login();
+        }
+    }
+
+    public function login() {
+        if(isset($_SESSION['admin'])) {
+            $this->dashboard();
             exit;
         }
-        $this->view('Admin/Login.php', ['title' => 'Login Admin']);
+        $this->view('Admin/Login', ['title' => 'Login Admin']);
     }
 
     public function doLogin() {
@@ -27,27 +36,38 @@ class AdminController extends Controller {
         $password = $_POST['password'] ?? '';
 
         $admin = $this->adminModel->login($username, $password);
+        
         if($admin) {
             Auth::login($admin);
-            header("Location: /Dashboard");
+            // PERBAIKAN: Gunakan path relatif agar fleksibel
+            // Tidak perlu http://localhost/SIBUTAD/Public/...
+            // Cukup panggil index.php karena file ini dijalankan dari folder Public juga
+            header("Location: index.php?url=admin/dashboard");
             exit;
         } else {
-            // bisa kirim pesan error, untuk sederhana:
-            $this->view('Admin/Login.php', ['title' => 'Login Admin', 'error' => 'Username atau password salah']);
+            $this->view('Admin/Login', [
+                'title' => 'Login Admin', 
+                'error' => 'Username atau password salah'
+            ]);
         }
     }
 
     public function logout() {
         Auth::logout();
-        header("Location: /Login");
+        // PERBAIKAN: Gunakan path relatif
+        header("Location: index.php?url=admin/login");
         exit;
     }
 
     public function dashboard() {
-        Auth::checkLogin();
-        // contoh: ambil statistik via ViewData model
-        $viewModel = new \App\Models\ViewData();
-        $stat = $viewModel->getStatistik();
+        Auth::checkLogin(); 
+        
+        $stat = []; 
+        if(class_exists('\App\Models\ViewData')) {
+            $viewModel = new \App\Models\ViewData();
+            $stat = $viewModel->getStatistik();
+        }
+
         $this->view('Admin/Dashboard', ['title' => 'Dashboard', 'stat' => $stat]);
     }
 }

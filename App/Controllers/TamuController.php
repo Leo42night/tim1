@@ -14,45 +14,62 @@ class TamuController extends Controller {
 
     // Halaman form tamu (public)
     public function index() {
-        // tampilkan form tamu
-        $this->view('Tamu/Form-input', ['title' => 'Buku Tamu']);
+        $this->view('Tamu/Form-Input', ['title' => 'Buku Tamu']);
     }
 
     // Proses simpan tamu
     public function simpan() {
-        // ambil data POST
-        $nama = $_POST['nama'] ?? '';
-        $tanggal = $_POST['tanggal_kunjungan'] ?? date('Y-m-d');
-        $email = $_POST['email'] ?? '';
-        $idkegiatan = $_POST['idkegiatan'] ?? null;
+        // 1. Ambil data dari form HTML
+        // Pastikan name di HTML adalah "id_kegiatan"
+        $idkegiatan = $_POST['id_kegiatan'] ?? null;
+        $nama       = $_POST['nama'] ?? '';
+        $tanggal    = $_POST['tanggal_kunjungan'] ?? date('Y-m-d');
+        $email      = $_POST['email'] ?? '';
 
-        // minimal validasi sederhana
-        if(trim($nama) == '' || trim($tanggal) == '') {
-            // bisa redirect balik dengan pesan error (sederhana: echo)
-            echo "Nama dan tanggal wajib diisi.";
+        // 2. VALIDASI KEAMANAN: Cek apakah ID Kegiatan benar-benar ANGKA?
+        // Database Anda (INT) akan error fatal jika menerima string kosong "".
+        if (!is_numeric($idkegiatan)) {
+            // Tampilkan pesan alert dan kembalikan user ke halaman sebelumnya
+            echo "<script>
+                    alert('Gagal! Anda wajib memilih Kegiatan yang valid.');
+                    window.history.back();
+                  </script>";
+            exit; // Stop proses agar tidak lanjut ke database
+        }
+
+        // 3. Validasi Nama
+        if(trim($nama) == '') {
+            echo "<script>alert('Nama wajib diisi.'); window.history.back();</script>";
             exit;
         }
 
+        // 4. Susun Data untuk Model
+        // PENTING: Kunci array di sini harus sama persis dengan yang diminta di Model Tamu.php
         $data = [
-            'nama' => $nama,
+            'id_kegiatan'       => $idkegiatan, // <-- Kunci ini yang diperbaiki
+            'nama'              => $nama,
             'tanggal_kunjungan' => $tanggal,
-            'email' => $email,
-            'idkegiatan' => $idkegiatan
+            'email'             => $email
         ];
 
-        $saved = $this->tamuModel->tambahTamu($data);
+        // 5. Eksekusi Simpan
+        try {
+            $saved = $this->tamuModel->tambahTamu($data);
 
-        if($saved) {
-            // tampilkan halaman terima kasih
-            $this->view('Tamu/thanks', ['title' => 'Terima Kasih']);
-        } else {
-            echo "Gagal menyimpan data tamu.";
+            if($saved) {
+                // Berhasil
+                $this->view('Tamu/thanks', ['title' => 'Terima Kasih']);
+            } else {
+                echo "Gagal menyimpan data tamu.";
+            }
+        } catch (\Exception $e) {
+            // Jika masih ada error database lain, tampilkan pesannya
+            echo "Terjadi kesalahan sistem: " . $e->getMessage();
         }
     }
 
-    // Hanya admin bisa lihat daftar tamu - akses diperiksa di controller admin (atau middleware)
     public function daftar() {
         $tamu = $this->tamuModel->getSemuaTamu();
-        $this->view('Admin/Daftar-tamu', ['title' => 'Daftar Tamu', 'tamu' => $tamu]);
+        $this->view('Admin/DaftarTamu', ['title' => 'Daftar Tamu', 'tamu' => $tamu]);
     }
 }

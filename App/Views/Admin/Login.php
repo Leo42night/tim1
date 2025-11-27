@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/../Layout/Header'; ?>
+<?php require __DIR__ . '/../Layout/Header.php'; ?>
 <div class="row justify-content-center">
   <div class="col-md-5">
     <div class="card shadow">
@@ -22,4 +22,4 @@
     </div>
   </div>
 </div>
-<?php require __DIR__ . '/../Layout/Footer'; ?>
+<?php require __DIR__ . '/../Layout/Footer.php'; ?>

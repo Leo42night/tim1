@@ -15,7 +15,7 @@ class Database {
         $host = "localhost";
         $dbname = "buku_tamu";
         $user = "root";
-        $pass = "ndy@ulia";
+        $pass = "Kangkitty30_";
 
         try {
             $this->connection = new PDO(
