@@ -1,0 +1,12 @@
+# Jika public adalah document root: letakkan .htaccess di public/
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # jika file atau folder ada, langsung gunakan
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # arahkan semua permintaan ke index.php (front controller)
+  RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>

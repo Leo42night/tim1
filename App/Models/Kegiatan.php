@@ -27,6 +27,8 @@ class Kegiatan extends Model {
     }
 
     public function getSemuaKegiatan() {
-        return $this->all();
+        $stmt = $this->db->prepare("SELECT * FROM kegiatan ORDER BY tanggal_kegiatan DESC");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
