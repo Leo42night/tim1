@@ -10,7 +10,7 @@ class KegiatanController extends Controller {
     protected $kegiatanModel;
 
     public function __construct() {
-        // Cek login admin
+
         Auth::checkLogin();
         $this->kegiatanModel = new Kegiatan();
     }

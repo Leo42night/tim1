@@ -35,16 +35,15 @@ class AdminController extends Controller {
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        // TENTUKAN USERNAME & PASSWORD YANG KAMU MAU DI SINI
         $user_rahasia = 'admin';
-        $pass_rahasia = 'admin123'; // Password biasa (bukan hash)
+        $pass_rahasia = 'admin123'; 
 
-        // Cek apakah inputan sama dengan yang kita tentukan?
+
         if($username === $user_rahasia && $password === $pass_rahasia) {
             
-            // Karena tidak ambil dari database, kita buat data admin 'palsu' untuk sesi
+
             $adminData = [
-                'id' => 999, // ID asal saja
+                'id' => 999, // 
                 'username' => $user_rahasia,
                 'nama' => 'Administrator'
             ];

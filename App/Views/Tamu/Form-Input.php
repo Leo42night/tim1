@@ -6,7 +6,6 @@
       <div class="card-body">
         <h4 class="card-title mb-3">Form Buku Tamu</h4>
         
-        <!-- Action Form: Pastikan URL ini benar sesuai settingan routing Anda -->
         <form method="POST" action="http://localhost/SIBUTAD/Public/index.php?url=tamu/simpan">
           
           <div class="mb-3">
@@ -21,7 +20,7 @@
 
           <div class="mb-3">
             <label class="form-label">Email (opsional)</label>
-            <!-- Email boleh kosong karena di database tipenya VARCHAR (teks) -->
+
             <input type="email" name="email" class="form-control">
           </div>
 

@@ -38,7 +38,7 @@ class TamuController extends Controller {
         // 2. VALIDASI KEAMANAN: Cek apakah ID Kegiatan benar-benar ANGKA?
         // Database Anda (INT) akan error fatal jika menerima string kosong "".
         if (!is_numeric($idkegiatan)) {
-            // Tampilkan pesan alert dan kembalikan user ke halaman sebelumnya
+ 
             echo "<script>
                     alert('Gagal! Anda wajib memilih Kegiatan yang valid.');
                     window.history.back();
@@ -52,8 +52,6 @@ class TamuController extends Controller {
             exit;
         }
 
-        // 4. Susun Data untuk Model
-        // PENTING: Kunci array di sini harus sama persis dengan yang diminta di Model Tamu.php
         $data = [
             'id_kegiatan'       => $idkegiatan, // <-- Kunci ini yang diperbaiki
             'nama'              => $nama,
