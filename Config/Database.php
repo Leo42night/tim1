@@ -13,7 +13,7 @@ class Database {
 
     private function __construct() {
 
-        $dotenv = Dotenv::createImmutable(__DIR__);
+        $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
         $dotenv->load(); // load dari file .env, bisa di akses pakai $_ENV, $_SERVER, atau getenv()
 
         $type = $_ENV['DB_TYPE'] ?? "mysql";
@@ -48,5 +48,5 @@ class Database {
 
     public function getConnection() {
         return $this->connection;
-    }
+    }   
 }
