@@ -29,8 +29,8 @@ class TamuController extends Controller {
     // Proses simpan tamu
     public function simpan() {
         // 1. Ambil data dari form HTML
-        // Pastikan name di HTML adalah "id_kegiatan"
-        $idkegiatan = $_POST['id_kegiatan'] ?? null;
+        // Pastikan name di HTML adalah "id"
+        $idkegiatan = $_POST['id'] ?? null;
         $nama       = $_POST['nama'] ?? '';
         $tanggal    = $_POST['tanggal_kunjungan'] ?? date('Y-m-d');
         $email      = $_POST['email'] ?? '';
@@ -53,7 +53,7 @@ class TamuController extends Controller {
         }
 
         $data = [
-            'id_kegiatan'       => $idkegiatan, // <-- Kunci ini yang diperbaiki
+            'id'       => $idkegiatan, // <-- Kunci ini yang diperbaiki
             'nama'              => $nama,
             'tanggal_kunjungan' => $tanggal,
             'email'             => $email

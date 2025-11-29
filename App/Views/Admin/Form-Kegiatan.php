@@ -11,7 +11,7 @@
             <div class="card-body">
                 <form action="/kegiatan/update" method="POST">
 
-                    <input type="hidden" name="id_kegiatan" value="<?= $kegiatan['id_kegiatan']; ?>">
+                    <input type="hidden" name="id" value="<?= $kegiatan['id']; ?>">
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Nama Kegiatan</label>

@@ -22,7 +22,7 @@ class Kegiatan extends Model {
     }
 
     public function hapusKegiatan($id) {
-        $stmt = $this->db->prepare("DELETE FROM kegiatan WHERE id_kegiatan = ?");
+        $stmt = $this->db->prepare("DELETE FROM kegiatan WHERE id = ?");
         return $stmt->execute([$id]);
     }
 
@@ -33,7 +33,7 @@ class Kegiatan extends Model {
     }
 
     public function getKegiatanById($id) {
-        $stmt = $this->db->prepare("SELECT * FROM kegiatan WHERE id_kegiatan = ?");
+        $stmt = $this->db->prepare("SELECT * FROM kegiatan WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
@@ -44,7 +44,7 @@ class Kegiatan extends Model {
                 nama_kegiatan = ?, 
                 tanggal_kegiatan = ?, 
                 lokasi = ?
-            WHERE id_kegiatan = ?
+            WHERE id = ?
         ";
 
         $stmt = $this->db->prepare($sql);

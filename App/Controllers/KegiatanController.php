@@ -64,7 +64,7 @@ class KegiatanController extends Controller {
             exit;
         }
 
-        $id = $_POST["id_kegiatan"] ?? null;
+        $id = $_POST["id"] ?? null;
 
         if (!$id) {
             echo "ID kegiatan tidak ditemukan. Form edit rusak.";

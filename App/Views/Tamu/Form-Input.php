@@ -28,10 +28,10 @@
             <label class="form-label">Kegiatan</label>
             <!-- PENTING: Atribut 'required' ditambahkan di sini -->
             <!-- Ini mencegah browser mengirim form jika user belum memilih kegiatan -->
-            <select name="id_kegiatan" class="form-select" required>
+            <select name="id" class="form-select" required>
               <option value="">— Pilih Kegiatan —</option>
                 <?php foreach ($kegiatan as $k): ?>
-                  <option value="<?= $k['id_kegiatan'] ?>">
+                  <option value="<?= $k['id'] ?>">
                     <?= htmlspecialchars($k['nama_kegiatan']) ?>
                   </option>
                 <?php endforeach; ?>

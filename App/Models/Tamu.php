@@ -11,12 +11,12 @@ class Tamu extends Model {
     // Insert tamu baru
     public function tambahTamu($data) {
         $stmt = $this->db->prepare("
-            INSERT INTO tamu (id_kegiatan, nama, tanggal_kunjungan, email) 
+            INSERT INTO tamu (id, nama, tanggal_kunjungan, email) 
             VALUES (?, ?, ?, ?)
         ");
 
         return $stmt->execute([
-            $data['id_kegiatan'],
+            $data['id'],
             $data['nama'],
             $data['tanggal_kunjungan'],
             $data['email'],

@@ -13,8 +13,8 @@ class ViewData extends Model {
         COUNT(t.id_tamu) AS total_tamu
         FROM kegiatan k
         LEFT JOIN tamu t 
-        ON k.id_kegiatan = t.id_kegiatan
-        GROUP BY k.id_kegiatan, k.nama_kegiatan
+        ON k.id = t.id
+        GROUP BY k.id, k.nama_kegiatan
 
     ");
     $stmt->execute();

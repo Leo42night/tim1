@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use Dotenv\Dotenv;
 use PDO;
 use PDOException;
 
@@ -12,14 +13,20 @@ class Database {
 
     private function __construct() {
 
-        $host = "localhost";
-        $dbname = "buku_tamu";
-        $user = "root";
-        $pass = "ndy@ulia";
+        $dotenv = Dotenv::createImmutable(__DIR__);
+        $dotenv->load(); // load dari file .env, bisa di akses pakai $_ENV, $_SERVER, atau getenv()
+
+        $type = $_ENV['DB_TYPE'] ?? "mysql";
+        $host = $_ENV['DB_HOST'] ?? "localhost";
+        $port = $_ENV['DB_PORT'] ?? "3306";
+        $dbname = $_ENV['DB_NAME'] ?? "buku_tamu";
+        $sslmode = $_ENV['DB_SSLMODE'] ?? ""; // vercel postgres pakai require
+        $user = $_ENV['DB_USER'] ?? "root";
+        $pass = $_ENV['DB_PASS'] ?? "";
 
         try {
             $this->connection = new PDO(
-                "mysql:host=$host;dbname=$dbname;charset=utf8",
+                "$type:host=$host;port=$port;dbname=$dbname;sslmode=$sslmode",
                 $user,
                 $pass,
                 [
